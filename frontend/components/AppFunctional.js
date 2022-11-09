@@ -11,6 +11,8 @@ const initialIndex = 4 // the index the "B" is at
 export default function AppFunctional(props) {
   const [activeSq, setActiveSq] = useState(initialIndex);
   const [steps, setSteps] = useState(initialSteps);
+  const [message, setMessage] = useState(initialMessage);
+  const [email, setEmail] = useState(initialEmail);
 
   function countSteps () {
     setSteps(steps + 1);
@@ -20,6 +22,8 @@ export default function AppFunctional(props) {
     evt.preventDefault();
     setSteps(initialSteps);
     setActiveSq(initialIndex);
+    setMessage(initialMessage);
+    setEmail(initialEmail);
   }
 
 
