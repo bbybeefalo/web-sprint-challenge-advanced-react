@@ -31,10 +31,10 @@ export default function AppFunctional(props) {
     } else if (direction === "up" && activeSq > 2) {
       setActiveSq(activeSq - 3);
       countSteps();
-    } else if (direction === "left" && activeSq !== 0 ) {
+    } else if (direction === "left" && activeSq !== 0 && activeSq !== 3 && activeSq!== 6) {
       setActiveSq(activeSq - 1);
       countSteps();
-    } else if (direction === "right") {
+    } else if (direction === "right" && activeSq !== 2 && activeSq !== 5 && activeSq!== 8) {
       setActiveSq(activeSq + 1);
       countSteps();
     }
