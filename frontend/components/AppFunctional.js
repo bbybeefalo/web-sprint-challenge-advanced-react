@@ -20,22 +20,26 @@ export default function AppFunctional(props) {
     evt.preventDefault();
     setSteps(initialSteps);
     setActiveSq(initialIndex);
-    console.log(activeSq);
   }
 
+
   function move (evt) {
-    let direction = evt.target.id;
-    countSteps();
-    if (direction === "down") {
+    let direction = evt.target.id; 
+    if (direction === "down" && activeSq < 6) {
       setActiveSq(activeSq + 3);
-    } else if (direction === "up") {
+      countSteps();
+    } else if (direction === "up" && activeSq > 2) {
       setActiveSq(activeSq - 3);
-    } else if (direction === "left") {
+      countSteps();
+    } else if (direction === "left" && activeSq !== 0 ) {
       setActiveSq(activeSq - 1);
+      countSteps();
     } else if (direction === "right") {
       setActiveSq(activeSq + 1);
+      countSteps();
     }
-  }
+    console.log(activeSq)
+  };
 
   return (
     <div id="wrapper" className={props.className}>
