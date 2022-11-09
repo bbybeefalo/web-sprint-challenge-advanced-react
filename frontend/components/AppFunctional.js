@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import { act } from 'react-dom/test-utils'
 
 // Suggested initial states
 const initialMessage = ''
@@ -11,8 +12,7 @@ export default function AppFunctional(props) {
   const [activeSq, setActiveSq] = useState(initialIndex);
   const [steps, setSteps] = useState(initialSteps);
 
-  function countSteps (evt) {
-    evt.preventDefault();
+  function countSteps () {
     setSteps(steps + 1);
   }
 
@@ -20,6 +20,21 @@ export default function AppFunctional(props) {
     evt.preventDefault();
     setSteps(initialSteps);
     setActiveSq(initialIndex);
+    console.log(activeSq);
+  }
+
+  function move (evt) {
+    let direction = evt.target.id;
+    countSteps();
+    if (direction === "down") {
+      setActiveSq(activeSq + 3);
+    } else if (direction === "up") {
+      setActiveSq(activeSq - 3);
+    } else if (direction === "left") {
+      setActiveSq(activeSq - 1);
+    } else if (direction === "right") {
+      setActiveSq(activeSq + 1);
+    }
   }
 
   return (
@@ -33,8 +48,8 @@ export default function AppFunctional(props) {
           [0, 1, 2, 
            3, 4, 5,
            6, 7, 8].map(idx => (
-            <div key={idx} className={`square${idx === 4 ? ' active' : ''}`}>
-              {idx === 4 ? 'B' : null}
+            <div key={idx} className={`square${idx === activeSq ? ' active' : ''}`}>
+              {idx === activeSq ? 'B' : null}
             </div>
           ))
         }
@@ -43,10 +58,10 @@ export default function AppFunctional(props) {
         <h3 id="message"></h3>
       </div>
       <div id="keypad">
-        <button id="left" onClick={countSteps}>LEFT</button>
-        <button id="up" onClick={countSteps}>UP</button>
-        <button id="right" onClick={countSteps}>RIGHT</button>
-        <button id="down" onClick={countSteps}>DOWN</button>
+        <button id="left" onClick={move}>LEFT</button>
+        <button id="up" onClick={move}>UP</button>
+        <button id="right" onClick={move}>RIGHT</button>
+        <button id="down" onClick={move}>DOWN</button>
         <button id="reset" onClick={reset}>reset</button>
       </div>
       <form>
