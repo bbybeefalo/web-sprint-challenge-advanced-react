@@ -43,21 +43,21 @@ export default function AppFunctional(props) {
       countSteps();
       setMessage(initialMessage);
     } else if (direction === "up" && activeSq < 2) {
-      setMessage(`You can't go up.`);
+      setMessage(`You can't go up`);
 
     } else if (direction === "left" && activeSq !== 0 && activeSq !== 3 && activeSq !== 6) {
       setActiveSq(activeSq - 1);
       countSteps();
       setMessage(initialMessage);
     } else if (direction === "left" && activeSq === 0 || activeSq === 3 || activeSq === 6) {
-      setMessage(`You can't go left.`);
+      setMessage(`You can't go left`);
 
     } else if (direction === "right" && activeSq !== 2 && activeSq !== 5 && activeSq !== 8) {
     setActiveSq(activeSq + 1);
     countSteps();
     setMessage(initialMessage);
     } else if (direction === "right" && activeSq === 2 || activeSq === 5 || activeSq === 8) {
-    setMessage(`You can't go right.`);
+    setMessage(`You can't go right`);
     }
 };
 
