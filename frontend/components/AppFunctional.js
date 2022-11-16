@@ -97,14 +97,14 @@ export default function AppFunctional(props) {
       steps: steps,
       email: email
     }
-    console.log(info)
     axios.post('http://localhost:9000/api/result', info)
     .then(res => {
-      console.log('yes');
+      setMessage(res.data.message);
+      setEmail(initialEmail);
     })
     .catch(err => {
       console.log('no');
-    })
+    });
   }
 
 
