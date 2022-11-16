@@ -55,7 +55,7 @@ export default function AppFunctional(props) {
   function move(evt) {
     evt.preventDefault();
     let direction = evt.target.id;
-     
+
     if (direction === "down" && activeSq < 6) {
       setActiveSq(activeSq + 3);
       countSteps();
@@ -103,13 +103,15 @@ export default function AppFunctional(props) {
       email: email
     }
     axios.post('http://localhost:9000/api/result', info)
-    .then(res => {
-      setMessage(res.data.message);
-    })
-    .catch(err => {
-      setMessage(err.response.data.message)
-    });
-    
+      .then(res => {
+        setMessage(res.data.message);
+        console.log(initialEmail)
+        setEmail(initialEmail);
+      })
+      .catch(err => {
+        setMessage(err.response.data.message)
+      });
+
   }
 
 
