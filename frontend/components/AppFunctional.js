@@ -1,3 +1,4 @@
+import { getByText } from '@testing-library/react'
 import React from 'react'
 import { useState } from 'react'
 import { act } from 'react-dom/test-utils'
@@ -15,7 +16,6 @@ export default function AppFunctional(props) {
   const [message, setMessage] = useState(initialMessage);
   const [email, setEmail] = useState(initialEmail);
 
-
   function countSteps() {
     setSteps(steps + 1);
   }
@@ -28,6 +28,31 @@ export default function AppFunctional(props) {
     setEmail(initialEmail);
   }
 
+  let y = 2
+  let x = 2
+  function Y(sq) {
+    if (sq === 0 || sq === 1 || sq === 2) {
+      y = 1
+    } else if (sq === 3 || sq === 4 || sq === 5) {
+      y = 2
+    } else {
+      y = 3
+    }
+
+    return y
+  }
+
+  function X(sq) {
+    if (sq === 0 || sq === 3 || sq === 6) {
+      x = 1
+    } else if (sq === 1 || sq === 4 || sq === 7) {
+      x = 2
+    } else {
+      x = 3
+    }
+
+    return x
+  }
 
   function move(evt) {
     evt.preventDefault();
@@ -36,7 +61,7 @@ export default function AppFunctional(props) {
       setActiveSq(activeSq + 3);
       countSteps();
       setMessage(initialMessage)
-     
+
     } else if (direction === "down" && activeSq >= 6) {
       setMessage(`You can't go down`);
 
@@ -52,7 +77,7 @@ export default function AppFunctional(props) {
       setActiveSq(activeSq - 1);
       countSteps();
       setMessage(initialMessage);
-   
+
     } else if (direction === "left" && activeSq === 0 || activeSq === 3 || activeSq === 6) {
       setMessage(`You can't go left`);
 
@@ -60,16 +85,19 @@ export default function AppFunctional(props) {
       setActiveSq(activeSq + 1);
       countSteps();
       setMessage(initialMessage);
-      
+
     } else if (direction === "right" && activeSq === 2 || activeSq === 5 || activeSq === 8) {
       setMessage(`You can't go right`);
     }
+
+    X(activeSq);
+    Y(activeSq);
   };
 
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Coordinates ()</h3>
+        <h3 id="coordinates">Coordinates ({X(activeSq)},{Y(activeSq)})</h3>
         <h3 id="steps">You moved {steps} times</h3>
       </div>
       <div id="grid">
