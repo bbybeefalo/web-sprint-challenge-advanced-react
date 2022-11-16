@@ -28,50 +28,31 @@ export default function AppFunctional(props) {
     setEmail(initialEmail);
   }
 
- let X = 2
- let Y = 2
-  function getXY(activeSq) {
-    if (activeSq === 0 || activeSq === 1 || activeSq === 2) {
-      let Y = 1;
-    } else if (activeSq === 3 || activeSq === 4 || activeSq === 5) {
-      let Y = 2;
-    } else if (activeSq === 6 || activeSq === 7 || activeSq === 8) {
-      let Y = 3;
-    } 
-
-    if (activeSq === 0 || activeSq === 3 || activeSq === 6) {
-      let X = 1;
-    } else if (activeSq === 1 || activeSq === 4 || activeSq === 7) {
-      let X = 2;
-    } else if (activeSq === 2 || activeSq === 5 || activeSq === 8) {
-      let X = 3;
-    }
-  }
-
 
   function move(evt) {
+    evt.preventDefault();
     let direction = evt.target.id;
     if (direction === "down" && activeSq < 6) {
       setActiveSq(activeSq + 3);
       countSteps();
       setMessage(initialMessage)
-      getXY(activeSq);
-    } else if (direction === "down" && activeSq > 6) {
+     
+    } else if (direction === "down" && activeSq >= 6) {
       setMessage(`You can't go down`);
 
     } else if (direction === "up" && activeSq > 2) {
       setActiveSq(activeSq - 3);
       countSteps();
       setMessage(initialMessage);
-      getXY(activeSq)
-    } else if (direction === "up" && activeSq < 2) {
+
+    } else if (direction === "up" && activeSq <= 2) {
       setMessage(`You can't go up`);
 
     } else if (direction === "left" && activeSq !== 0 && activeSq !== 3 && activeSq !== 6) {
       setActiveSq(activeSq - 1);
       countSteps();
       setMessage(initialMessage);
-      getXY(activeSq)
+   
     } else if (direction === "left" && activeSq === 0 || activeSq === 3 || activeSq === 6) {
       setMessage(`You can't go left`);
 
@@ -79,7 +60,7 @@ export default function AppFunctional(props) {
       setActiveSq(activeSq + 1);
       countSteps();
       setMessage(initialMessage);
-      getXY(activeSq)
+      
     } else if (direction === "right" && activeSq === 2 || activeSq === 5 || activeSq === 8) {
       setMessage(`You can't go right`);
     }
@@ -88,7 +69,7 @@ export default function AppFunctional(props) {
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Coordinates ({X},{Y})</h3>
+        <h3 id="coordinates">Coordinates ()</h3>
         <h3 id="steps">You moved {steps} times</h3>
       </div>
       <div id="grid">
