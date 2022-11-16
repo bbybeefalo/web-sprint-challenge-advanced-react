@@ -2,6 +2,7 @@ import { getByText } from '@testing-library/react'
 import React from 'react'
 import { useState } from 'react'
 import { act } from 'react-dom/test-utils'
+import axios from 'axios'
 
 // Suggested initial states
 const initialMessage = ''
@@ -38,10 +39,8 @@ export default function AppFunctional(props) {
     } else {
       y = 3
     }
-
     return y
   }
-
   function X(sq) {
     if (sq === 0 || sq === 3 || sq === 6) {
       x = 1
@@ -50,7 +49,6 @@ export default function AppFunctional(props) {
     } else {
       x = 3
     }
-
     return x
   }
 
@@ -89,10 +87,27 @@ export default function AppFunctional(props) {
     } else if (direction === "right" && activeSq === 2 || activeSq === 5 || activeSq === 8) {
       setMessage(`You can't go right`);
     }
-
-    X(activeSq);
-    Y(activeSq);
   };
+
+  function submit(evt) {
+    evt.preventDefault();
+    const info = {
+      x: X(activeSq),
+      y: Y(activeSq),
+      steps: steps,
+      email: email
+    }
+    console.log(info)
+    axios.post('http://localhost:9000/api/result', info)
+    .then(res => {
+      console.log('yes');
+    })
+    .catch(err => {
+      console.log('no');
+    })
+  }
+
+
 
   return (
     <div id="wrapper" className={props.className}>
@@ -121,8 +136,8 @@ export default function AppFunctional(props) {
         <button id="down" onClick={move}>DOWN</button>
         <button id="reset" onClick={reset}>reset</button>
       </div>
-      <form>
-        <input id="email" type="email" placeholder="type email"></input>
+      <form onSubmit={submit}>
+        <input id="email" type="email" placeholder="type email" onChange={evt => {setEmail(evt.target.value)}}></input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
