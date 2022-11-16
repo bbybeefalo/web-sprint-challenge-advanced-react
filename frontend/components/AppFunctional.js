@@ -28,8 +28,7 @@ export default function AppFunctional(props) {
     setEmail(initialEmail);
   }
 
-  let X = 2
-  let Y = 2
+ 
   function getXY(activeSq) {
     if (activeSq === 0 || activeSq === 1 || activeSq === 2) {
       let Y = 1;
@@ -88,7 +87,7 @@ export default function AppFunctional(props) {
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Coordinates ({X}, {Y})</h3>
+        <h3 id="coordinates">Coordinates ({X},{Y})</h3>
         <h3 id="steps">You moved {steps} times</h3>
       </div>
       <div id="grid">
