@@ -55,6 +55,7 @@ export default function AppFunctional(props) {
   function move(evt) {
     evt.preventDefault();
     let direction = evt.target.id;
+     
     if (direction === "down" && activeSq < 6) {
       setActiveSq(activeSq + 3);
       countSteps();
@@ -76,7 +77,7 @@ export default function AppFunctional(props) {
       countSteps();
       setMessage(initialMessage);
 
-    } else if (direction === "left" && activeSq === 0 || activeSq === 3 || activeSq === 6) {
+    } else if (direction === "left" && (activeSq === 0 || activeSq === 3 || activeSq === 6)) {
       setMessage(`You can't go left`);
 
     } else if (direction === "right" && activeSq !== 2 && activeSq !== 5 && activeSq !== 8) {
@@ -88,6 +89,10 @@ export default function AppFunctional(props) {
       setMessage(`You can't go right`);
     }
   };
+
+  function change(evt) {
+    setEmail(evt.target.value);
+  }
 
   function submit(evt) {
     evt.preventDefault();
@@ -103,7 +108,7 @@ export default function AppFunctional(props) {
       setEmail(initialEmail);
     })
     .catch(err => {
-      console.log('no');
+      console.log(err)
     });
   }
 
@@ -137,7 +142,7 @@ export default function AppFunctional(props) {
         <button id="reset" onClick={reset}>reset</button>
       </div>
       <form onSubmit={submit}>
-        <input id="email" type="email" placeholder="type email" onChange={evt => {setEmail(evt.target.value)}}></input>
+        <input id="email" type="email" placeholder="type email" onChange={change}></input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
