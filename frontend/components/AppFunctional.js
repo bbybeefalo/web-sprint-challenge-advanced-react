@@ -105,12 +105,11 @@ export default function AppFunctional(props) {
     axios.post('http://localhost:9000/api/result', info)
       .then(res => {
         setMessage(res.data.message);
-        console.log(initialEmail)
-        setEmail(initialEmail);
       })
       .catch(err => {
         setMessage(err.response.data.message)
       });
+      setEmail(initialEmail);
 
   }
 
