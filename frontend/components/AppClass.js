@@ -14,12 +14,13 @@ const initialState = {
 }
 
 export default class AppClass extends React.Component {
-  // THE FOLLOWING HELPERS ARE JUST RECOMMENDATIONS.
-  // You can delete them and build your own logic from scratch.
+  constructor () {
+    super();
+    this.state = initialState;
+  }
 
-  getXY = () => {
-    // It it not necessary to have a state to track the coordinates.
-    // It's enough to know what index the "B" is at, to be able to calculate them.
+  countStep = () => {
+   this.setState({...this.state, steps: steps + 1})
   }
 
   getXYMessage = () => {
@@ -28,8 +29,9 @@ export default class AppClass extends React.Component {
     // returns the fully constructed string.
   }
 
-  reset = () => {
-    // Use this helper to reset all states to their initial values.
+  reset = (evt) => {
+    evt.preventDefault();
+    this.setState({initialState})
   }
 
   getNextIndex = (direction) => {
@@ -57,7 +59,7 @@ export default class AppClass extends React.Component {
       <div id="wrapper" className={className}>
         <div className="info">
           <h3 id="coordinates">Coordinates (2, 2)</h3>
-          <h3 id="steps">You moved 0 times</h3>
+          <h3 id="steps">You moved {this.state.steps} times</h3>
         </div>
         <div id="grid">
           {
@@ -72,11 +74,11 @@ export default class AppClass extends React.Component {
           <h3 id="message"></h3>
         </div>
         <div id="keypad">
-          <button id="left">LEFT</button>
-          <button id="up">UP</button>
-          <button id="right">RIGHT</button>
-          <button id="down">DOWN</button>
-          <button id="reset">reset</button>
+          <button id="left" onClick={() => this.countStep}>LEFT</button>
+          <button id="up" onClick={this.countStep}>UP</button>
+          <button id="right" onClick={this.countStep}>RIGHT</button>
+          <button id="down" onClick={this.countStep}>DOWN</button>
+          <button id="reset" onClick={(e) => this.reset}>reset</button>
         </div>
         <form>
           <input id="email" type="email" placeholder="type email"></input>
