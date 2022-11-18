@@ -1,3 +1,4 @@
+import axios from 'axios'
 import e from 'cors'
 import React from 'react'
 
@@ -24,49 +25,45 @@ export default class AppClass extends React.Component {
   }
 
   count = () => {
-    this.setState({steps: this.state.steps + 1});
+    this.setState({ steps: this.state.steps + 1 });
   }
 
   reset = () => {
-    this.setState({...initialState});
+    this.setState({ ...initialState });
   }
- 
+
   move = (evt) => {
     evt.preventDefault();
     let direction = evt.target.id;
-    if (direction === "down" && (this.state.index < 6)){
-      this.setState({index: this.state.index + 3, message:initialMessage})
-      this.count(); 
+    if (direction === "down" && (this.state.index < 6)) {
+      this.setState({ index: this.state.index + 3, message: initialMessage })
+      this.count();
     } else if (direction === "down" && this.state.index >= 6) {
-      this.setState({message: `You can't go down`});
+      this.setState({ message: `You can't go down` });
 
     } else if (direction === "up" && this.state.index > 2) {
-      this.setState({index: this.state.index - 3});
+      this.setState({ index: this.state.index - 3 });
       this.count();
-      this.setState({message: initialMessage});
-
+      this.setState({ message: initialMessage });
     } else if (direction === "up" && this.state.index <= 2) {
-      this.setState({message: `You can't go up`});
+      this.setState({ message: `You can't go up` });
 
     } else if (direction === "left" && this.state.index !== 0 && this.state.index !== 3 && this.state.index !== 6) {
-      this.setState({index: this.state.index - 1, message: initialMessage});
+      this.setState({ index: this.state.index - 1, message: initialMessage });
       this.count();
- 
-
     } else if (direction === "left" && (this.state.index === 0 || this.state.index === 3 || this.state.index === 6)) {
-      this.setState({message: `You can't go left`});
+      this.setState({ message: `You can't go left` });
 
     } else if (direction === "right" && this.state.index !== 2 && this.state.index !== 5 && this.state.index !== 8) {
-      this.setState({index: this.state.index + 1, message: initialMessage});
+      this.setState({ index: this.state.index + 1, message: initialMessage });
       this.count();
-
     } else if (direction === "right" && this.state.index === 2 || this.state.index === 5 || this.state.index === 8) {
-      this.setState({message: `You can't go right`});
+      this.setState({ message: `You can't go right` });
     }
   };
-  
 
-   Y = (sq) => {
+
+  Y = (sq) => {
     if (sq === 0 || sq === 1 || sq === 2) {
       y = 1
     } else if (sq === 3 || sq === 4 || sq === 5) {
@@ -76,7 +73,7 @@ export default class AppClass extends React.Component {
     }
     return y
   }
-   X = (sq) => {
+  X = (sq) => {
     if (sq === 0 || sq === 3 || sq === 6) {
       x = 1
     } else if (sq === 1 || sq === 4 || sq === 7) {
@@ -87,6 +84,28 @@ export default class AppClass extends React.Component {
     return x
   }
 
+  change = (evt) => {
+    this.setState({email: evt.target.value})
+  }
+
+  submit = (evt) => {
+    evt.preventDefault();
+    const info = {
+      x: this.X(this.state.index),
+      y: this.X(this.state.index),
+      steps: this.state.steps,
+      email: this.state.email
+    }
+    axios.post('http://localhost:9000/api/result', info)
+    .then(res => {
+      this.setState({message: res.data.message})
+    })
+    .catch(err => {
+      this.setState({message: err.response.data.message})
+    })
+    this.setState({email: initialEmail});
+  }
+
 
   render() {
     const { className } = this.props
@@ -94,17 +113,17 @@ export default class AppClass extends React.Component {
       <div id="wrapper" className={className}>
         <div className="info">
           <h3 id="coordinates">Coordinates ({this.X(this.state.index)}, {this.Y(this.state.index)})</h3>
-          <h3 id="steps">You moved {this.state.steps} times</h3>
+          <h3 id="steps">You moved {this.state.steps} {this.state.steps === 1 ? 'time' : 'times'}</h3>
         </div>
         <div id="grid">
           {
-            [0, 1, 2, 
-              3, 4, 5, 
+            [0, 1, 2,
+              3, 4, 5,
               6, 7, 8].map(idx => (
-              <div key={idx} className={`square${idx === this.state.index ? ' active' : ''}`}>
-                {idx === this.state.index ? 'B' : null}
-              </div>
-            ))
+                <div key={idx} className={`square${idx === this.state.index ? ' active' : ''}`}>
+                  {idx === this.state.index ? 'B' : null}
+                </div>
+              ))
           }
         </div>
         <div className="info">
@@ -117,8 +136,8 @@ export default class AppClass extends React.Component {
           <button id="down" onClick={this.move}>DOWN</button>
           <button id="reset" onClick={this.reset}>reset</button>
         </div>
-        <form>
-          <input id="email" type="email" placeholder="type email"></input>
+        <form onSubmit={this.submit}>
+          <input id="email" type="email" placeholder="type email" value={this.state.email} onChange={this.change}></input>
           <input id="submit" type="submit"></input>
         </form>
       </div>
