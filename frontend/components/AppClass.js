@@ -103,7 +103,7 @@ export default class AppClass extends React.Component {
     .catch(err => {
       this.setState({message: err.response.data.message})
     })
-    this.setState({email: initialEmail});
+    
   }
 
 
