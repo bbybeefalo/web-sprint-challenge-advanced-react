@@ -1,3 +1,4 @@
+import e from 'cors'
 import React from 'react'
 
 // Suggested initial states
@@ -34,14 +35,36 @@ export default class AppClass extends React.Component {
     evt.preventDefault();
     let direction = evt.target.id;
     if (direction === "down" && (this.state.index < 6)){
-      this.setState({index: this.state.index + 3})
-      this.count();
+      this.setState({index: this.state.index + 3, message:initialMessage})
+      this.count(); 
+    } else if (direction === "down" && this.state.index >= 6) {
+      this.setState({message: `You can't go down`});
+
     } else if (direction === "up" && this.state.index > 2) {
       this.setState({index: this.state.index - 3});
-      console.log(this.state.index);
       this.count();
+      this.setState({message: initialMessage});
+
+    } else if (direction === "up" && this.state.index <= 2) {
+      this.setState({message: `You can't go up`});
+
+    } else if (direction === "left" && this.state.index !== 0 && this.state.index !== 3 && this.state.index !== 6) {
+      this.setState({index: this.state.index - 1, message: initialMessage});
+      this.count();
+ 
+
+    } else if (direction === "left" && (this.state.index === 0 || this.state.index === 3 || this.state.index === 6)) {
+      this.setState({message: `You can't go left`});
+
+    } else if (direction === "right" && this.state.index !== 2 && this.state.index !== 5 && this.state.index !== 8) {
+      this.setState({index: this.state.index + 1, message: initialMessage});
+      this.count();
+
+    } else if (direction === "right" && this.state.index === 2 || this.state.index === 5 || this.state.index === 8) {
+      this.setState({message: `You can't go right`});
     }
-  }
+  };
+  
 
    Y = (sq) => {
     if (sq === 0 || sq === 1 || sq === 2) {
@@ -85,12 +108,12 @@ export default class AppClass extends React.Component {
           }
         </div>
         <div className="info">
-          <h3 id="message"></h3>
+          <h3 id="message">{this.state.message}</h3>
         </div>
         <div id="keypad">
-          <button id="left" onClick={this.count}>LEFT</button>
-          <button id="up" onClick={this.count}>UP</button>
-          <button id="right" onClick={this.count}>RIGHT</button>
+          <button id="left" onClick={this.move}>LEFT</button>
+          <button id="up" onClick={this.move}>UP</button>
+          <button id="right" onClick={this.move}>RIGHT</button>
           <button id="down" onClick={this.move}>DOWN</button>
           <button id="reset" onClick={this.reset}>reset</button>
         </div>
