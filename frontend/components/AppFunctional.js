@@ -31,7 +31,26 @@ export default function AppFunctional(props) {
 
   let y = 2
   let x = 2
-
+  function Y(sq) {
+    if (sq === 0 || sq === 1 || sq === 2) {
+      y = 1
+    } else if (sq === 3 || sq === 4 || sq === 5) {
+      y = 2
+    } else {
+      y = 3
+    }
+    return y
+  }
+  function X(sq) {
+    if (sq === 0 || sq === 3 || sq === 6) {
+      x = 1
+    } else if (sq === 1 || sq === 4 || sq === 7) {
+      x = 2
+    } else {
+      x = 3
+    }
+    return x
+  }
 
   function move(evt) {
     evt.preventDefault();
